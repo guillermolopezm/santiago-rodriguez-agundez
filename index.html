@@ -340,7 +340,7 @@
   <!-- POST -->
   <p class="section-title">Post preparado · Listo para publicar hoy</p>
   <div class="grid-full">
-    <div class="post-card">
+    <div class="post-card" id="mainPost">
       <div class="post-header">
         <div class="post-avatar"><img src="avatar-santiago.png" alt="Santiago Rodríguez Agúndez"></div>
         <div>
@@ -447,6 +447,10 @@ El capital busca predecibilidad. España tiene lo más difícil: energía dispon
 ¿Estamos listos para aparecer en esos term sheets?</div>
           <img src="2.png" class="post-img" onerror="this.style.display='none'" alt="Imagen LinkedIn 8 mayo">
           <div class="post-tags" style="margin-top:16px"><span class="tag">#DataCenters</span><span class="tag">#IAInfraestructura</span><span class="tag">#Geopolítica</span><span class="tag">#España</span><span class="tag">#EnergíaRenovable</span><span class="tag">#InversiónDigital</span><span class="tag">#Semiconductores</span></div>
+          <div class="post-actions">
+            <a href="2.png" download="imagen-linkedin-8mayo.png" class="btn-action btn-download">⬇ Descargar imagen</a>
+            <button onclick="copyHistPost(this)" class="btn-action btn-copy">Copiar texto del post</button>
+          </div>
         </div>
         <div style="margin-top:20px;">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#718096;margin-bottom:14px;display:flex;align-items:center;gap:10px;">Por qué este post <span style="flex:1;height:1px;background:#e2e8f0;display:block;"></span></div>
@@ -503,6 +507,10 @@ España no tiene que ser la más barata ni la más innovadora. Tiene que ser la 
 El capital que busca dónde construir la próxima generación de compute está mirando el mapa. ¿Está España lista para aparecer en él?</div>
           <img src="1.png" class="post-img" onerror="this.style.display='none'" alt="Imagen LinkedIn 7 mayo">
           <div class="post-tags" style="margin-top:16px"><span class="tag">#DataCenters</span><span class="tag">#IAInfraestructura</span><span class="tag">#Geopolítica</span><span class="tag">#España</span><span class="tag">#EnergíaRenovable</span><span class="tag">#InversiónDigital</span><span class="tag">#Semiconductores</span></div>
+          <div class="post-actions">
+            <a href="1.png" download="imagen-linkedin-7mayo.png" class="btn-action btn-download">⬇ Descargar imagen</a>
+            <button onclick="copyHistPost(this)" class="btn-action btn-copy">Copiar texto del post</button>
+          </div>
         </div>
         <div style="margin-top:20px;">
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#718096;margin-bottom:14px;display:flex;align-items:center;gap:10px;">Por qué este post <span style="flex:1;height:1px;background:#e2e8f0;display:block;"></span></div>
@@ -608,10 +616,21 @@ El capital que busca dónde construir la próxima generación de compute está m
 <script>
 function copyPost() {
   const text = document.getElementById('postBody').innerText;
-  const tags = Array.from(document.querySelectorAll('.post-tags .tag')).map(t => t.innerText).join(' ');
+  const tags = Array.from(document.querySelectorAll('#mainPost .post-tags .tag')).map(t => t.innerText).join(' ');
   const full = text + '\n\n' + tags;
   navigator.clipboard.writeText(full).then(() => {
     const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ ¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar texto del post'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+function copyHistPost(btn) {
+  const card = btn.closest('.post-card');
+  const text = card.querySelector('.post-body').innerText;
+  const tags = Array.from(card.querySelectorAll('.post-tags .tag')).map(t => t.innerText).join(' ');
+  const full = text + '\n\n' + tags;
+  navigator.clipboard.writeText(full).then(() => {
     btn.textContent = '✅ ¡Copiado!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'Copiar texto del post'; btn.classList.remove('copied'); }, 2500);
